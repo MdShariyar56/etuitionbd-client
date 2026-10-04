@@ -1,5 +1,6 @@
 "use client";
 
+import AuthShell from "@/components/AuthShell";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -56,10 +57,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="hero-bg grid min-h-[calc(100vh-4rem)] place-items-center px-4 py-12">
-      <div className="w-full max-w-md rounded-box border border-base-300 bg-base-100 p-8 shadow-xl">
-        <h1 className="text-center text-2xl font-extrabold text-neutral">Welcome Back!</h1>
-        <p className="section-sub mt-1 text-center text-sm">Login to your account</p>
+    <AuthShell title="Welcome back!" sub="Login to your account to continue">
 
         <form onSubmit={submit} className="mt-6 space-y-4">
           <label className="form-control w-full">
@@ -80,20 +78,19 @@ export default function LoginPage() {
               Forgot password?
             </button>
           </div>
-          <button className="btn btn-primary w-full" disabled={busy}>
+          <button className="btn btn-primary shine w-full rounded-full shadow-lg shadow-primary/25" disabled={busy}>
             {busy ? <span className="loading loading-spinner loading-sm" /> : "Login"}
           </button>
         </form>
 
         <div className="divider text-xs text-base-content/50">or continue with</div>
-        <button onClick={() => run(googleLogin)} disabled={busy} className="btn btn-outline w-full">
+        <button onClick={() => run(googleLogin)} disabled={busy} className="btn btn-outline w-full rounded-full">
           <FcGoogle className="text-xl" /> Google Login
         </button>
 
         <p className="mt-6 text-center text-sm text-base-content/70">
           Don&apos;t have an account? <Link href="/register" className="font-bold text-primary">Register</Link>
         </p>
-      </div>
-    </div>
+    </AuthShell>
   );
 }
