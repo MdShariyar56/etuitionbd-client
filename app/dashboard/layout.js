@@ -93,8 +93,8 @@ export default function DashboardLayout({ children }) {
                   onClick={() => (document.getElementById("dash-drawer").checked = false)}
                   className={`gap-3 rounded-xl py-2.5 transition-all duration-200 ${
                     isActive(href)
-                      ? "bg-brand font-semibold text-white shadow-lg shadow-indigo-500/30"
-                      : "text-slate-400 hover:translate-x-1 hover:bg-white/5 hover:text-white"
+                      ? "bg-brand font-semibold text-white shadow-lg shadow-pink-500/30"
+                      : "text-stone-400 hover:transtone-x-1 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <Icon /> {label}
@@ -107,11 +107,11 @@ export default function DashboardLayout({ children }) {
               <Avatar src={user.photoURL} name={user.name} size="size-9" />
               <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-white">{user.name}</p>
-                <p className="truncate text-xs capitalize text-slate-400">{user.role}</p>
+                <p className="truncate text-xs capitalize text-stone-400">{user.role}</p>
               </div>
             </div>
-            <Link href="/" className="btn btn-ghost btn-sm w-full justify-start gap-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white"><FaHouse /> Back to Site</Link>
-            <button onClick={logout} className="btn btn-ghost btn-sm w-full justify-start gap-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white">
+            <Link href="/" className="btn btn-ghost btn-sm w-full justify-start gap-3 rounded-xl text-stone-300 hover:bg-white/5 hover:text-white"><FaHouse /> Back to Site</Link>
+            <button onClick={logout} className="btn btn-ghost btn-sm w-full justify-start gap-3 rounded-xl text-stone-300 hover:bg-white/5 hover:text-white">
               <FaRightFromBracket /> Logout
             </button>
           </div>

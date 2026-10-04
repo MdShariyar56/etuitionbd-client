@@ -81,7 +81,7 @@ export default function CheckoutPage() {
         </div>
         <div className="rounded-box border border-base-300 bg-base-100 p-6 shadow-sm">
           <h2 className="mb-4 font-bold text-neutral">Payment Method</h2>
-          <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: dark ? "night" : "stripe", variables: { colorPrimary: dark ? "#6366f1" : "#4f46e5", borderRadius: "10px" } } }}>
+          <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: dark ? "night" : "stripe", variables: { colorPrimary: dark ? "#ec4899" : "#db2777", borderRadius: "10px" } } }}>
             <CheckoutForm amount={amount} />
           </Elements>
         </div>

@@ -1,5 +1,5 @@
 const fallback = (name) =>
-  `https://ui-avatars.com/api/?background=4f46e5&color=fff&bold=true&name=${encodeURIComponent(name || "User")}`;
+  `https://ui-avatars.com/api/?background=db2777&color=fff&bold=true&name=${encodeURIComponent(name || "User")}`;
 
 export default function Avatar({ src, name, size = "size-10", className = "" }) {
   return (

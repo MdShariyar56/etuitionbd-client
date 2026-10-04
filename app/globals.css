@@ -5,18 +5,18 @@
   default: true;
   color-scheme: light;
   --color-base-100: #ffffff;
-  --color-base-200: #f5f7fc;
-  --color-base-300: #e4e8f2;
-  --color-base-content: #1e293b;
-  --color-primary: #4f46e5;
+  --color-base-200: #fff6f2;
+  --color-base-300: #f4e3db;
+  --color-base-content: #2b1d26;
+  --color-primary: #db2777;
   --color-primary-content: #ffffff;
-  --color-secondary: #f59e0b;
-  --color-secondary-content: #1f1300;
+  --color-secondary: #ea580c;
+  --color-secondary-content: #ffffff;
   --color-accent: #0d9488;
   --color-accent-content: #ffffff;
-  --color-neutral: #0f172a;
-  --color-neutral-content: #f8fafc;
-  --color-info: #0ea5e9;
+  --color-neutral: #1f1320;
+  --color-neutral-content: #fff6f2;
+  --color-info: #0284c7;
   --color-success: #16a34a;
   --color-warning: #d97706;
   --color-error: #dc2626;
@@ -29,18 +29,18 @@
   name: "etuition-dark";
   prefersdark: false;
   color-scheme: dark;
-  --color-base-100: #0e1426;
-  --color-base-200: #090e1c;
-  --color-base-300: #1f2a44;
-  --color-base-content: #cbd5e1;
-  --color-primary: #6366f1;
+  --color-base-100: #1c1219;
+  --color-base-200: #140c12;
+  --color-base-300: #3a2633;
+  --color-base-content: #eadde4;
+  --color-primary: #ec4899;
   --color-primary-content: #ffffff;
-  --color-secondary: #fbbf24;
-  --color-secondary-content: #1f1300;
+  --color-secondary: #fb923c;
+  --color-secondary-content: #2a1300;
   --color-accent: #2dd4bf;
   --color-accent-content: #042f2e;
-  --color-neutral: #f1f5f9;
-  --color-neutral-content: #0f172a;
+  --color-neutral: #fff1f6;
+  --color-neutral-content: #1f1320;
   --color-info: #38bdf8;
   --color-success: #22c55e;
   --color-warning: #fbbf24;
@@ -51,6 +51,18 @@
   --border: 1px;
 }
 
+:root,
+[data-theme="etuition"] {
+  --brand-1: #db2777;
+  --brand-2: #f97316;
+  --brand-3: #f59e0b;
+}
+[data-theme="etuition-dark"] {
+  --brand-1: #ec4899;
+  --brand-2: #fb923c;
+  --brand-3: #fbbf24;
+}
+
 @theme inline {
   --font-sans: var(--font-jakarta), system-ui, sans-serif;
 }
@@ -59,6 +71,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
+  overflow-x: clip;
   font-family: var(--font-jakarta), system-ui, sans-serif;
   background: var(--color-base-100);
   color: var(--color-base-content);
@@ -92,13 +105,13 @@ body {
   border: 1px solid color-mix(in oklab, var(--color-primary) 22%, transparent);
 }
 .text-gradient {
-  background: linear-gradient(100deg, var(--color-primary), #8b5cf6 45%, var(--color-accent));
+  background: linear-gradient(100deg, var(--brand-1), var(--brand-2) 65%, var(--brand-3));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .bg-brand {
-  background: linear-gradient(135deg, var(--color-primary), #7c3aed 55%, #0ea5e9);
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 60%, var(--brand-3));
 }
 .hero-bg {
   background:
@@ -137,20 +150,68 @@ body {
   place-items: center;
   border-radius: 0.9rem;
   color: #fff;
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
   box-shadow: 0 10px 24px -10px color-mix(in oklab, var(--color-primary) 70%, transparent);
 }
+.icon-tile {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
+}
+.group:hover .icon-tile {
+  box-shadow: 0 16px 34px -10px color-mix(in oklab, var(--brand-1) 75%, transparent);
+}
+.icon-anim {
+  animation: icon-bob 3.6s ease-in-out infinite;
+}
+.group:hover .icon-anim,
+.icon-anim:hover {
+  animation: icon-wiggle 0.75s ease-in-out;
+}
+@keyframes icon-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes icon-wiggle {
+  0%,
+  100% {
+    transform: rotate(0) scale(1.1);
+  }
+  20% {
+    transform: rotate(-14deg) scale(1.15);
+  }
+  40% {
+    transform: rotate(11deg) scale(1.15);
+  }
+  60% {
+    transform: rotate(-7deg) scale(1.12);
+  }
+  80% {
+    transform: rotate(4deg) scale(1.1);
+  }
+}
+.img-zoom {
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.group:hover .img-zoom {
+  transform: scale(1.08);
+}
+
 .footer-surface {
   background:
-    radial-gradient(40rem 18rem at 10% 0%, rgb(99 102 241 / 0.22), transparent 60%),
-    radial-gradient(30rem 16rem at 95% 100%, rgb(45 212 191 / 0.14), transparent 60%),
-    #070b17;
+    radial-gradient(40rem 18rem at 10% 0%, rgb(236 72 153 / 0.2), transparent 60%),
+    radial-gradient(30rem 16rem at 95% 100%, rgb(249 115 22 / 0.16), transparent 60%),
+    #150b13;
   color: #cbd5e1;
 }
 .sidebar-surface {
   background:
-    radial-gradient(24rem 16rem at 0% 0%, rgb(99 102 241 / 0.25), transparent 60%),
-    #0a0f1f;
+    radial-gradient(24rem 16rem at 0% 0%, rgb(236 72 153 / 0.22), transparent 60%),
+    radial-gradient(20rem 14rem at 100% 100%, rgb(249 115 22 / 0.14), transparent 60%),
+    #150b13;
   color: #cbd5e1;
 }
 .blob {
@@ -211,7 +272,7 @@ body {
   width: 3.8rem;
   height: 3.8rem;
   border-radius: 1.15rem;
-  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
   color: #fff;
   font-size: 1.7rem;
   box-shadow: 0 14px 32px -10px color-mix(in oklab, var(--color-primary) 70%, transparent);
@@ -332,6 +393,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .icon-anim,
   .fade-up,
   .loader-ring,
   .loader-core,
@@ -351,4 +413,18 @@ body {
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
+}
+
+.theme-toggle .tt-moon,
+.theme-toggle .tt-sun {
+  transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.25, 1.2), opacity 0.3s ease;
+}
+[data-theme="etuition"] .theme-toggle .tt-sun,
+[data-theme="etuition-dark"] .theme-toggle .tt-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.3);
+}
+
+[data-theme="etuition-dark"] .glass {
+  border-color: rgb(255 255 255 / 0.09);
 }
