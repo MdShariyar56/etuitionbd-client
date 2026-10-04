@@ -3,6 +3,7 @@
 import AuthShell from "@/components/AuthShell";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useNextParam } from "@/lib/nextParam";
 import { useEffect, useState } from "react";
 import { alertError, alertSuccess } from "@/lib/alert";
 import { FcGoogle } from "react-icons/fc";
@@ -20,11 +21,12 @@ export default function RegisterPage() {
   const { user, loading, register, googleLogin } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", photoURL: "", role: "student" });
   const [busy, setBusy] = useState(false);
+  const next = useNextParam();
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   useEffect(() => {
-    if (!loading && user && !busy) router.replace(dashboardPath(user.role));
-  }, [loading, user, busy, router]);
+    if (!loading && user && !busy) router.replace(next || dashboardPath(user.role));
+  }, [loading, user, busy, router, next]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -39,7 +41,7 @@ export default function RegisterPage() {
     try {
       const u = await register({ ...form, email: form.email.trim(), name: form.name.trim() });
       alertSuccess("Account created!");
-      router.replace(dashboardPath(u.role));
+      router.replace(next || dashboardPath(u.role));
     } catch (err) {
       alertError(authMessage(err));
       setBusy(false);
@@ -50,7 +52,7 @@ export default function RegisterPage() {
     setBusy(true);
     try {
       const u = await googleLogin();
-      router.replace(dashboardPath(u.role));
+      router.replace(next || dashboardPath(u.role));
     } catch (err) {
       alertError(authMessage(err));
       setBusy(false);
@@ -90,7 +92,7 @@ export default function RegisterPage() {
           <FcGoogle className="text-xl" /> Continue with Google
         </button>
         <p className="mt-6 text-center text-sm text-base-content/70">
-          Already have an account? <Link href="/login" className="font-bold text-primary">Login</Link>
+          Already have an account? <Link href={next ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="font-bold text-primary">Login</Link>
         </p>
     </AuthShell>
   );

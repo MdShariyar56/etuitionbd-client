@@ -9,6 +9,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { dashboardPath, useAuth } from "@/context/AuthContext";
 import { authMessage } from "@/lib/authErrors";
+import { useNextParam } from "@/lib/nextParam";
+import { LuLock } from "react-icons/lu";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,10 +18,10 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
+  const next = useNextParam();
 
   const go = (u) => {
-    const next = new URLSearchParams(window.location.search).get("next");
-    router.replace(next && next.startsWith("/") ? next : dashboardPath(u.role));
+    router.replace(next || dashboardPath(u.role));
   };
 
   useEffect(() => {
@@ -59,6 +61,15 @@ export default function LoginPage() {
   return (
     <AuthShell title="Welcome back!" sub="Login to your account to continue">
 
+        {next && (
+          <div className="mt-5 flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary/10 p-3 text-sm font-medium text-neutral">
+            <span className="icon-tile size-9 shrink-0 text-base">
+              <LuLock className="icon-anim" />
+            </span>
+            Please login to see full tuition and tutor details.
+          </div>
+        )}
+
         <form onSubmit={submit} className="mt-6 space-y-4">
           <label className="form-control w-full">
             <span className="label-text mb-1 font-semibold">Email address</span>
@@ -89,7 +100,7 @@ export default function LoginPage() {
         </button>
 
         <p className="mt-6 text-center text-sm text-base-content/70">
-          Don&apos;t have an account? <Link href="/register" className="font-bold text-primary">Register</Link>
+          Don&apos;t have an account? <Link href={next ? `/register?next=${encodeURIComponent(next)}` : "/register"} className="font-bold text-primary">Register</Link>
         </p>
     </AuthShell>
   );
