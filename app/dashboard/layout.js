@@ -10,6 +10,7 @@ import {
 import Avatar from "@/components/Avatar";
 import Loading from "@/components/Loading";
 import Logo from "@/components/Logo";
+import ThemeToggle from "@/components/ThemeToggle";
 import { dashboardPath, useAuth } from "@/context/AuthContext";
 
 const menus = {
@@ -58,19 +59,23 @@ export default function DashboardLayout({ children }) {
     <div className="drawer lg:drawer-open">
       <input id="dash-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex min-h-screen flex-col bg-base-200">
-        <header className="sticky top-0 z-30 flex items-center justify-between border-b border-base-300 bg-base-100 px-4 py-3">
+        <header className="glass sticky top-0 z-30 flex items-center justify-between border-b border-base-300/70 px-4 py-3">
           <div className="flex items-center gap-2">
             <label htmlFor="dash-drawer" className="btn btn-ghost btn-square btn-sm lg:hidden" aria-label="Open sidebar">
               <FaBars />
             </label>
-            <p className="font-bold capitalize text-neutral">{user.role} Dashboard</p>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-base-content/50">Welcome back</p>
+              <p className="font-extrabold capitalize leading-tight text-neutral">{user.role} Dashboard</p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <div className="hidden text-right sm:block">
               <p className="text-sm font-bold leading-tight text-neutral">{user.name}</p>
               <p className="text-xs capitalize text-base-content/60">{user.role}</p>
             </div>
-            <Avatar src={user.photoURL} name={user.name} />
+            <Avatar src={user.photoURL} name={user.name} className="ring-2 ring-primary/30" />
           </div>
         </header>
         <main className="flex-1 p-4 md:p-6">{children}</main>
@@ -78,7 +83,7 @@ export default function DashboardLayout({ children }) {
 
       <div className="drawer-side z-40">
         <label htmlFor="dash-drawer" className="drawer-overlay" aria-label="Close sidebar" />
-        <aside className="flex min-h-full w-64 flex-col bg-neutral p-4 text-neutral-content">
+        <aside className="sidebar-surface flex min-h-full w-68 flex-col p-4">
           <div className="mb-6 px-2"><Logo light /></div>
           <ul className="menu w-full flex-1 gap-1 p-0">
             {items.map(({ href, label, Icon }) => (
@@ -86,7 +91,11 @@ export default function DashboardLayout({ children }) {
                 <Link
                   href={href}
                   onClick={() => (document.getElementById("dash-drawer").checked = false)}
-                  className={`gap-3 rounded-lg py-2.5 ${isActive(href) ? "bg-primary font-semibold text-white" : "hover:bg-white/10"}`}
+                  className={`gap-3 rounded-xl py-2.5 transition-all duration-200 ${
+                    isActive(href)
+                      ? "bg-brand font-semibold text-white shadow-lg shadow-indigo-500/30"
+                      : "text-slate-400 hover:translate-x-1 hover:bg-white/5 hover:text-white"
+                  }`}
                 >
                   <Icon /> {label}
                 </Link>
@@ -94,8 +103,15 @@ export default function DashboardLayout({ children }) {
             ))}
           </ul>
           <div className="mt-4 space-y-1 border-t border-white/10 pt-4">
-            <Link href="/" className="btn btn-ghost btn-sm w-full justify-start gap-3 text-neutral-content"><FaHouse /> Back to Site</Link>
-            <button onClick={logout} className="btn btn-ghost btn-sm w-full justify-start gap-3 text-neutral-content">
+            <div className="mb-3 flex items-center gap-3 rounded-xl bg-white/5 p-3">
+              <Avatar src={user.photoURL} name={user.name} size="size-9" />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-white">{user.name}</p>
+                <p className="truncate text-xs capitalize text-slate-400">{user.role}</p>
+              </div>
+            </div>
+            <Link href="/" className="btn btn-ghost btn-sm w-full justify-start gap-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white"><FaHouse /> Back to Site</Link>
+            <button onClick={logout} className="btn btn-ghost btn-sm w-full justify-start gap-3 rounded-xl text-slate-300 hover:bg-white/5 hover:text-white">
               <FaRightFromBracket /> Logout
             </button>
           </div>

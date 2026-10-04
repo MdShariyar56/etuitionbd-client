@@ -4,12 +4,14 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import Loading from "@/components/Loading";
 import StatusBadge from "@/components/StatusBadge";
 import PageHeader, { Empty } from "@/components/dashboard/PageHeader";
+import { useChartColors } from "@/lib/theme";
 import { useApi } from "@/lib/useApi";
 import { formatDate, money } from "@/lib/utils";
 
 export default function ReportsPage() {
   const payments = useApi("/payments");
   const stats = useApi("/stats");
+  const c = useChartColors();
 
   if ((payments.loading && !payments.data) || (stats.loading && !stats.data)) return <Loading fullScreen={false} />;
   const items = payments.data?.items || [];
@@ -18,7 +20,7 @@ export default function ReportsPage() {
     <>
       <PageHeader title="Reports & Analytics" sub="Platform earnings and all successful transactions." />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <div className="rounded-box bg-primary p-5 text-primary-content shadow-sm">
+        <div className="bg-brand rounded-box p-5 text-white shadow-lg shadow-primary/20">
           <p className="text-sm text-white/75">Total Platform Earnings</p>
           <p className="mt-1 text-3xl font-extrabold">{money(payments.data?.total)}</p>
         </div>
@@ -34,11 +36,11 @@ export default function ReportsPage() {
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={stats.data.monthly}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#d9e8e2" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip formatter={(v) => money(v)} />
-                <Bar dataKey="earnings" name="Revenue" fill="#0b6b53" radius={[4, 4, 0, 0]} />
+                <CartesianGrid strokeDasharray="3 3" stroke={c.grid} />
+                <XAxis dataKey="month" tick={{ fill: c.text, fontSize: 12 }} axisLine={{ stroke: c.grid }} tickLine={false} />
+                <YAxis tick={{ fill: c.text, fontSize: 12 }} axisLine={{ stroke: c.grid }} tickLine={false} />
+                <Tooltip formatter={(v) => money(v)} contentStyle={{ background: "var(--color-base-100)", border: "1px solid var(--color-base-300)", borderRadius: 12, color: "var(--color-base-content)" }} cursor={{ fill: c.grid, opacity: 0.4 }} />
+                <Bar dataKey="earnings" name="Revenue" fill={c.primary} radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

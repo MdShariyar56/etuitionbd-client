@@ -21,7 +21,7 @@ export default function PaymentsPage() {
         title={tutor ? "Revenue History" : "Payment History"}
         sub={tutor ? "Your total earnings and transactions." : "All payments you have made."}
       />
-      <div className="mb-6 w-full max-w-xs rounded-box bg-primary p-5 text-primary-content shadow-sm">
+      <div className="mb-6 w-full max-w-xs bg-brand rounded-box p-5 text-white shadow-lg shadow-primary/20">
         <p className="text-sm text-white/75">{tutor ? "Total Earnings" : "Total Paid"}</p>
         <p className="mt-1 text-3xl font-extrabold">{money(data?.total)}</p>
       </div>

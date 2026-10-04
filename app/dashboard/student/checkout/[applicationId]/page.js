@@ -8,6 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import Loading from "@/components/Loading";
 import PageHeader from "@/components/dashboard/PageHeader";
 import { api } from "@/lib/api";
+import { useTheme } from "@/lib/theme";
 import { money } from "@/lib/utils";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
@@ -50,6 +51,7 @@ function CheckoutForm({ amount }) {
 export default function CheckoutPage() {
   const { applicationId } = useParams();
   const [state, setState] = useState({ intent: null, error: null });
+  const dark = useTheme().theme === "dark";
   const started = useRef(false);
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export default function CheckoutPage() {
         </div>
         <div className="rounded-box border border-base-300 bg-base-100 p-6 shadow-sm">
           <h2 className="mb-4 font-bold text-neutral">Payment Method</h2>
-          <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: "stripe", variables: { colorPrimary: "#0b6b53" } } }}>
+          <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: dark ? "night" : "stripe", variables: { colorPrimary: dark ? "#6366f1" : "#4f46e5", borderRadius: "10px" } } }}>
             <CheckoutForm amount={amount} />
           </Elements>
         </div>
