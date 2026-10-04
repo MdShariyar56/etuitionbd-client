@@ -58,7 +58,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthShell title="Create your account" sub="Join E-TuitionBD as a student or tutor" wide>
+    <AuthShell title="Create your account" sub="Join E-TuitionBD as a student or tutor">
 
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div className="grid grid-cols-2 gap-3">
