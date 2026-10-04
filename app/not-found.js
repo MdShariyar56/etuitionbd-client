@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaCompass, FaHouse } from "react-icons/fa6";
+import { LuCompass, LuHouse } from "react-icons/lu";
 import Navbar from "@/components/Navbar";
 import ErrorScreen from "@/components/ErrorScreen";
 
@@ -11,12 +11,12 @@ export default function NotFound() {
       <Navbar />
       <ErrorScreen
         code="404"
-        icon={FaCompass}
+        icon={LuCompass}
         title="Page not found"
         message="Oops! The page you are looking for doesn't exist or may have been moved. Let's get you back on track."
       >
         <Link href="/" className="btn btn-primary">
-          <FaHouse /> Back to Home
+          <LuHouse /> Back to Home
         </Link>
         <Link href="/tuitions" className="btn btn-outline btn-primary">
           Browse Tuitions

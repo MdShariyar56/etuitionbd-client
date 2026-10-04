@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { FaEnvelope, FaLocationDot, FaPaperPlane, FaPhone } from "react-icons/fa6";
+import { LuMail, LuMapPin, LuPhone, LuSend, LuSparkles } from "react-icons/lu";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import { alertSuccess } from "@/lib/alert";
 
 const info = [
-  [FaLocationDot, "Address", "Dhaka, Bangladesh"],
-  [FaEnvelope, "Email", "support@etuitionbd.com"],
-  [FaPhone, "Phone", "+880 1700 000000"],
+  [LuMapPin, "Address", "Dhaka, Bangladesh"],
+  [LuMail, "Email", "support@etuitionbd.com"],
+  [LuPhone, "Phone", "+880 1700 000000"],
 ];
 
 export default function ContactPage() {
@@ -27,7 +27,9 @@ export default function ContactPage() {
       <span className="blob -right-16 top-10 size-72 bg-primary/30" />
       <div className="relative mx-auto max-w-5xl px-4 py-16">
         <Reveal className="text-center">
-          <span className="eyebrow mb-4">Contact</span>
+          <span className="eyebrow mb-4">
+            <LuSparkles className="icon-anim" /> Contact
+          </span>
           <h1 className="section-title">
             Get in <span className="text-gradient">touch</span>
           </h1>
@@ -36,11 +38,11 @@ export default function ContactPage() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-[1fr_1.4fr]">
           <Stagger className="space-y-4">
-            {info.map(([Icon, label, value]) => (
+            {info.map(([Icon, label, value], i) => (
               <StaggerItem key={label}>
                 <div className="card-modern group flex items-center gap-4 p-5">
                   <span className="icon-tile size-12 text-lg transition-transform duration-300 group-hover:scale-110">
-                    <Icon />
+                    <Icon className="icon-anim" style={{ animationDelay: `${i * 0.5}s` }} />
                   </span>
                   <div>
                     <p className="text-sm text-base-content/60">{label}</p>
@@ -63,8 +65,8 @@ export default function ContactPage() {
                 rows={5}
                 className="textarea textarea-bordered w-full"
               />
-              <button className="btn btn-primary shine w-full rounded-full shadow-lg shadow-primary/25">
-                <FaPaperPlane /> Send Message
+              <button className="btn btn-primary shine group w-full rounded-full shadow-lg shadow-primary/25">
+                <LuSend className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" /> Send Message
               </button>
             </form>
           </Reveal>

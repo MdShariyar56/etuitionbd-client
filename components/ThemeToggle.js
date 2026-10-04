@@ -1,7 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { FaMoon, FaSun } from "react-icons/fa6";
+import { LuMoon, LuSun } from "react-icons/lu";
 import { applyTheme, useTheme } from "@/lib/theme";
 
 export default function ThemeToggle({ className = "" }) {
@@ -9,7 +8,7 @@ export default function ThemeToggle({ className = "" }) {
   const dark = theme === "dark";
 
   const onClick = (e) => {
-    const next = dark ? "light" : "dark";
+    const next = document.documentElement.getAttribute("data-theme") === "etuition-dark" ? "light" : "dark";
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!document.startViewTransition || reduce) return applyTheme(next);
 
@@ -31,20 +30,10 @@ export default function ThemeToggle({ className = "" }) {
       onClick={onClick}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
-      className={`btn btn-ghost btn-circle btn-sm overflow-hidden border border-base-300 ${className}`}
+      className={`theme-toggle btn btn-ghost btn-circle btn-sm relative overflow-hidden border border-base-300 ${className}`}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={theme}
-          initial={{ y: -16, rotate: -90, opacity: 0 }}
-          animate={{ y: 0, rotate: 0, opacity: 1 }}
-          exit={{ y: 16, rotate: 90, opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="grid place-items-center text-base"
-        >
-          {dark ? <FaSun className="text-secondary" /> : <FaMoon className="text-primary" />}
-        </motion.span>
-      </AnimatePresence>
+      <LuMoon className="tt-moon absolute text-base text-primary" />
+      <LuSun className="tt-sun absolute text-base text-secondary" />
     </button>
   );
 }

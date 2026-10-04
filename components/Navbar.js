@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { FaBars, FaGaugeHigh, FaRightFromBracket, FaUserGear } from "react-icons/fa6";
+import { LuLayoutDashboard, LuLogOut, LuMenu, LuUserCog } from "react-icons/lu";
 import Logo from "./Logo";
 import Avatar from "./Avatar";
 import ThemeToggle from "./ThemeToggle";
@@ -31,7 +31,7 @@ export default function Navbar() {
         <div className="flex items-center gap-1">
           <div className="dropdown lg:hidden">
             <button tabIndex={0} className="btn btn-ghost btn-square btn-sm" aria-label="Open menu">
-              <FaBars className="text-lg" />
+              <LuMenu className="text-lg" />
             </button>
             <ul tabIndex={0} className="menu dropdown-content z-10 mt-3 w-60 gap-1 rounded-box border border-base-300 bg-base-100 p-2 shadow-xl">
               {links.map((l) => (
@@ -41,6 +41,17 @@ export default function Navbar() {
                   </Link>
                 </li>
               ))}
+              {!loading && !user && (
+                <>
+                  <li className="my-1 border-t border-base-300" />
+                  <li>
+                    <Link href="/login" className="font-medium">Login</Link>
+                  </li>
+                  <li>
+                    <Link href="/register" className="font-medium text-primary">Register</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
           <Logo />
@@ -78,7 +89,7 @@ export default function Navbar() {
           ) : user ? (
             <>
               <Link href={dashboardPath(user.role)} className="btn btn-primary btn-sm hidden rounded-full sm:inline-flex">
-                <FaGaugeHigh /> Dashboard
+                <LuLayoutDashboard /> Dashboard
               </Link>
               <div className="dropdown dropdown-end">
                 <button tabIndex={0} className="btn btn-ghost btn-circle avatar" aria-label="Profile menu">
@@ -91,17 +102,17 @@ export default function Navbar() {
                   </li>
                   <li>
                     <Link href={dashboardPath(user.role)}>
-                      <FaGaugeHigh /> Dashboard
+                      <LuLayoutDashboard /> Dashboard
                     </Link>
                   </li>
                   <li>
                     <Link href="/dashboard/profile">
-                      <FaUserGear /> Profile
+                      <LuUserCog /> Profile
                     </Link>
                   </li>
                   <li>
                     <button onClick={logout} className="text-error">
-                      <FaRightFromBracket /> Logout
+                      <LuLogOut /> Logout
                     </button>
                   </li>
                 </ul>
@@ -109,7 +120,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link href="/login" className="btn btn-ghost btn-sm rounded-full">
+              <Link href="/login" className="btn btn-ghost btn-sm hidden rounded-full sm:inline-flex">
                 Login
               </Link>
               <Link href="/register" className="btn btn-primary btn-sm shine rounded-full shadow-lg shadow-primary/25">

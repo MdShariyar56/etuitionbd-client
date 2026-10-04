@@ -1,4 +1,4 @@
-import { FaGraduationCap } from "react-icons/fa6";
+import { LuGraduationCap } from "react-icons/lu";
 
 export default function Loading({ fullScreen = true, label = "Loading" }) {
   const body = (
@@ -6,7 +6,7 @@ export default function Loading({ fullScreen = true, label = "Loading" }) {
       <div className="loader-orbit">
         <span className="loader-ring" />
         <span className="loader-core">
-          <FaGraduationCap />
+          <LuGraduationCap />
         </span>
       </div>
       <div className="text-center">

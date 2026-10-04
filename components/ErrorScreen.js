@@ -5,9 +5,9 @@ export default function ErrorScreen({ code, title, message, icon: Icon, children
       <span className="pointer-events-none absolute -right-24 bottom-0 size-80 rounded-full bg-secondary/20 blur-3xl" />
       <div className="relative">
         <div className="err-float mx-auto mb-5 grid size-20 place-items-center rounded-3xl bg-primary text-4xl text-primary-content shadow-xl shadow-primary/30">
-          <Icon />
+          <Icon className="icon-anim" />
         </div>
-        <p className="bg-gradient-to-r from-primary to-accent bg-clip-text text-8xl font-black leading-none text-transparent sm:text-9xl">
+        <p className="bg-linear-to-r from-primary to-accent bg-clip-text text-8xl font-black leading-none text-transparent sm:text-9xl">
           {code}
         </p>
         <h1 className="mt-4 text-3xl font-extrabold text-neutral">{title}</h1>

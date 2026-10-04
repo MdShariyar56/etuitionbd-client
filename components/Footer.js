@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube, FaLocationDot, FaPhone, FaEnvelope } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube, } from "react-icons/fa6";
+import { LuMail, LuMapPin, LuPhone } from "react-icons/lu";
 import Logo from "./Logo";
 
 const social = [
@@ -25,7 +26,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4">
           <Logo light tagline />
-          <p className="text-sm leading-relaxed text-slate-400">
+          <p className="text-sm leading-relaxed text-stone-400">
             E-TuitionBD is a modern tuition management platform that connects students with verified tutors, with
             transparent payments and structured communication.
           </p>
@@ -35,8 +36,8 @@ export default function Footer() {
           <ul className="space-y-2.5 text-sm">
             {quick.map(([label, href]) => (
               <li key={href}>
-                <Link href={href} className="inline-flex items-center gap-2 text-slate-400 transition hover:translate-x-1 hover:text-white">
-                  <span className="size-1.5 rounded-full bg-indigo-400" /> {label}
+                <Link href={href} className="inline-flex items-center gap-2 text-stone-400 transition hover:transtone-x-1 hover:text-white">
+                  <span className="size-1.5 rounded-full bg-pink-400" /> {label}
                 </Link>
               </li>
             ))}
@@ -44,21 +45,21 @@ export default function Footer() {
         </div>
         <div>
           <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-white">Contact Info</h4>
-          <ul className="space-y-3 text-sm text-slate-400">
+          <ul className="space-y-3 text-sm text-stone-400">
             <li className="flex items-start gap-3">
-              <FaLocationDot className="mt-0.5 shrink-0 text-indigo-400" /> Dhaka, Bangladesh
+              <LuMapPin className="mt-0.5 shrink-0 text-pink-400" /> Dhaka, Bangladesh
             </li>
             <li className="flex items-center gap-3">
-              <FaPhone className="shrink-0 text-indigo-400" /> +880 1700 000000
+              <LuPhone className="shrink-0 text-pink-400" /> +880 1700 000000
             </li>
             <li className="flex items-center gap-3">
-              <FaEnvelope className="shrink-0 text-indigo-400" /> support@etuitionbd.com
+              <LuMail className="shrink-0 text-pink-400" /> support@etuitionbd.com
             </li>
           </ul>
         </div>
         <div>
           <h4 className="mb-4 text-sm font-bold uppercase tracking-widest text-white">Follow Us</h4>
-          <p className="mb-4 text-sm text-slate-400">Stay updated with new tuitions and tutors.</p>
+          <p className="mb-4 text-sm text-stone-400">Stay updated with new tuitions and tutors.</p>
           <div className="flex flex-wrap gap-3">
             {social.map(({ Icon, label, href }) => (
               <a
@@ -67,7 +68,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:bg-indigo-500 hover:text-white hover:shadow-lg hover:shadow-indigo-500/30"
+                className="grid size-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-stone-300 transition duration-300 hover:-transtone-y-1 hover:border-transparent hover:bg-pink-500 hover:text-white hover:shadow-lg hover:shadow-pink-500/30 [&>svg]:transition-transform [&>svg]:duration-500 hover:[&>svg]:rotate-[360deg]"
               >
                 <Icon />
               </a>
@@ -75,7 +76,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t border-white/10 py-5 text-center text-sm text-slate-500">
+      <div className="border-t border-white/10 py-5 text-center text-sm text-stone-500">
         © {new Date().getFullYear()} E-TuitionBD. All rights reserved.
       </div>
     </footer>
