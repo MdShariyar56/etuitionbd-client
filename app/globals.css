@@ -1,26 +1,53 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "etuition";
+  default: true;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #f2f8f6;
+  --color-base-300: #d9e8e2;
+  --color-base-content: #1b2b27;
+  --color-primary: #0b6b53;
+  --color-primary-content: #ffffff;
+  --color-secondary: #e9a23b;
+  --color-secondary-content: #1b2b27;
+  --color-accent: #2e9e83;
+  --color-accent-content: #ffffff;
+  --color-neutral: #0f2e27;
+  --color-neutral-content: #e8f3ef;
+  --color-info: #3b82f6;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.9rem;
+  --border: 1px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+}
+
+.section-title {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-neutral);
+}
+.section-sub {
+  color: color-mix(in oklab, var(--color-base-content) 65%, transparent);
+}
+.hero-bg {
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgb(46 158 131 / 0.18), transparent 60%),
+    radial-gradient(40rem 25rem at -5% 20%, rgb(233 162 59 / 0.12), transparent 60%),
+    var(--color-base-200);
 }
