@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-TuitionBD — Learn · Teach · Grow
 
-## Getting Started
+A complete tuition management platform where **students** post tuition requirements, **tutors** apply, and **admins** review, verify and monitor everything, with Stripe payments and role-based dashboards.
 
-First, run the development server:
+**Live URL:** _add after deployment_
+**Server repository / API:** see the eTuitionBD server project (separate repo, deployed separately).
+
+## Purpose
+
+Solve the real problem of finding qualified tutors and verified tuitions: reduce friction between students and tutors with automated workflows, transparent payments and admin moderation.
+
+## Features
+
+- **Auth:** Firebase email/password + Google login, own JWT (role + expiry verified on every API call), role-based routing, private routes that survive a reload.
+- **Student:** create / edit (pre-filled) / delete tuitions, view applied tutors, accept (Stripe checkout) or reject, payment history, profile settings.
+- **Tutor:** apply via modal (name/email read-only), edit/delete applications until approved, ongoing tuitions, revenue history, editable public profile.
+- **Admin:** user management (edit, change role, block, delete), tuition approval/rejection, reports & analytics with charts and full transaction history.
+- **Payments:** a tutor is approved **only after** the Stripe payment is verified server-side; other pending applications are auto-rejected.
+- **Home:** hero, latest tuitions and tutors (fetched live), How it Works, Why Choose Us, Framer Motion animations.
+- **Challenges:** search, sort (budget/date), advanced filters (class, subject, location, budget), pagination, JWT role/expiry verification.
+- Full-screen loading spinner, 404 page, sticky DaisyUI navbar, responsive layouts, separate dashboard layout.
+
+## Tech stack / packages
+
+Next.js (App Router), React, Tailwind CSS, DaisyUI, Firebase Auth, Stripe (`@stripe/react-stripe-js`), Framer Motion, Recharts, react-hot-toast, SweetAlert2, react-icons.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in your keys
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This is the **client**. It talks to the eTuitionBD server through `NEXT_PUBLIC_API_URL` (default `http://localhost:4000`), so start the server too.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Only public Firebase and Stripe publishable keys live here (`.env.local`, never committed). Database, JWT and Stripe secrets live in the server project.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Admin account
 
-## Learn More
+Register normally with the email set in `ADMIN_EMAIL`; that account is automatically given the **admin** role.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment checklist
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Set `NEXT_PUBLIC_API_URL` to the deployed server URL, plus the Firebase and Stripe publishable variables from `.env.example`.
+- Add the deployed domain to **Firebase → Authentication → Authorized domains**.
+- Set `CLIENT_URL` on the server to this site's URL so CORS allows it.
+- Stripe test card: `4242 4242 4242 4242`, any future date, any CVC.
