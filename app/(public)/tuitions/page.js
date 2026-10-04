@@ -48,11 +48,14 @@ function Listing() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
-      <h1 className="section-title">Available Tuitions</h1>
-      <p className="section-sub mt-1">Search, filter and sort to find the tuition that fits you.</p>
+      <span className="eyebrow mb-3">Browse</span>
+      <h1 className="section-title">
+        Available <span className="text-gradient">Tuitions</span>
+      </h1>
+      <p className="section-sub mt-2">Search, filter and sort to find the tuition that fits you.</p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[18rem_1fr]">
-        <aside className="h-fit space-y-4 rounded-box border border-base-300 bg-base-100 p-5 shadow-sm">
+        <aside className="glass h-fit space-y-4 rounded-3xl border border-base-300 p-5 shadow-lg shadow-primary/5 lg:sticky lg:top-20">
           <label className="form-control w-full">
             <span className="label-text mb-1 font-semibold">Search</span>
             <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Subject or location" className="input input-bordered w-full" />
@@ -86,7 +89,7 @@ function Listing() {
               <input type="number" min="0" value={maxBudget} onChange={set(setMax)} placeholder="Max" className="input input-bordered w-full" />
             </div>
           </div>
-          <button onClick={clear} className="btn btn-outline btn-primary btn-sm w-full">Clear All</button>
+          <button onClick={clear} className="btn btn-outline btn-primary btn-sm w-full rounded-full">Clear All</button>
         </aside>
 
         <section>
@@ -102,10 +105,14 @@ function Listing() {
 
           {loading && !data ? <Loading fullScreen={false} /> : data?.items?.length ? (
             <div className={`grid gap-5 sm:grid-cols-2 xl:grid-cols-3 ${loading ? "opacity-60" : ""}`}>
-              {data.items.map((t) => <TuitionCard key={t._id} tuition={t} />)}
+              {data.items.map((t, i) => (
+                <div key={t._id} className="fade-up h-full" style={{ animationDelay: `${i * 60}ms` }}>
+                  <TuitionCard tuition={t} />
+                </div>
+              ))}
             </div>
           ) : (
-            <div className="rounded-box bg-base-200 p-12 text-center text-base-content/60">No tuitions match your filters.</div>
+            <div className="rounded-box border border-dashed border-base-300 p-12 text-center text-base-content/60">No tuitions match your filters.</div>
           )}
           <Pagination page={page} pages={data?.pages || 1} onChange={(p) => { setPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
         </section>

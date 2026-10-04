@@ -25,8 +25,11 @@ export default function TutorsPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
-      <h1 className="section-title">Our Verified Tutors</h1>
-      <p className="section-sub mt-1">Find an experienced tutor for your subject and area.</p>
+      <span className="eyebrow mb-3">Tutors</span>
+      <h1 className="section-title">
+        Our <span className="text-gradient">Verified Tutors</span>
+      </h1>
+      <p className="section-sub mt-2">Find an experienced tutor for your subject and area.</p>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by name or subject" className="input input-bordered flex-1" />
@@ -36,10 +39,14 @@ export default function TutorsPage() {
       <div className="mt-8">
         {loading && !data ? <Loading fullScreen={false} /> : data?.items?.length ? (
           <div className={`grid gap-5 sm:grid-cols-2 lg:grid-cols-4 ${loading ? "opacity-60" : ""}`}>
-            {data.items.map((t) => <TutorCard key={t._id} tutor={t} />)}
+            {data.items.map((t, i) => (
+              <div key={t._id} className="fade-up h-full" style={{ animationDelay: `${i * 60}ms` }}>
+                <TutorCard tutor={t} />
+              </div>
+            ))}
           </div>
         ) : (
-          <div className="rounded-box bg-base-200 p-12 text-center text-base-content/60">No tutors found.</div>
+          <div className="rounded-box border border-dashed border-base-300 p-12 text-center text-base-content/60">No tutors found.</div>
         )}
         <Pagination page={page} pages={data?.pages || 1} onChange={setPage} />
       </div>
