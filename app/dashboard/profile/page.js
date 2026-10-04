@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { updateProfile } from "firebase/auth";
 import Avatar from "@/components/Avatar";
 import PageHeader from "@/components/dashboard/PageHeader";
@@ -44,9 +44,9 @@ export default function ProfileSettingsPage() {
       const { user: updated } = await api("/users/me", { method: "PATCH", body });
       setUser(updated);
       if (auth.currentUser) await updateProfile(auth.currentUser, { displayName: updated.name, photoURL: updated.photoURL || null });
-      toast.success("Profile updated");
+      alertSuccess("Profile updated");
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     } finally {
       setSaving(false);
     }

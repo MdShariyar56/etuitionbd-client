@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { FcGoogle } from "react-icons/fc";
 import { FaUserGraduate, FaChalkboardUser } from "react-icons/fa6";
 import { dashboardPath, useAuth } from "@/context/AuthContext";
@@ -27,20 +27,20 @@ export default function RegisterPage() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (form.password.length < 6) return toast.error("Password must be at least 6 characters.");
+    if (form.password.length < 6) return alertError("Password must be at least 6 characters.");
     if (!/[A-Z]/.test(form.password) || !/[a-z]/.test(form.password)) {
-      return toast.error("Password needs both uppercase and lowercase letters.");
+      return alertError("Password needs both uppercase and lowercase letters.");
     }
     if (!/^(\+?88)?01[3-9]\d{8}$/.test(form.phone.replace(/[\s-]/g, ""))) {
-      return toast.error("Enter a valid Bangladeshi phone number.");
+      return alertError("Enter a valid Bangladeshi phone number.");
     }
     setBusy(true);
     try {
       const u = await register({ ...form, email: form.email.trim(), name: form.name.trim() });
-      toast.success("Account created!");
+      alertSuccess("Account created!");
       router.replace(dashboardPath(u.role));
     } catch (err) {
-      toast.error(authMessage(err));
+      alertError(authMessage(err));
       setBusy(false);
     }
   };
@@ -51,7 +51,7 @@ export default function RegisterPage() {
       const u = await googleLogin();
       router.replace(dashboardPath(u.role));
     } catch (err) {
-      toast.error(authMessage(err));
+      alertError(authMessage(err));
       setBusy(false);
     }
   };

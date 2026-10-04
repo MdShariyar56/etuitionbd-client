@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import Loading from "@/components/Loading";
 import StatusBadge from "@/components/StatusBadge";
 import PageHeader, { Empty } from "@/components/dashboard/PageHeader";
@@ -21,10 +21,10 @@ export default function TuitionManagementPage() {
     setBusyId(t._id);
     try {
       await api(`/tuitions/${t._id}/status`, { method: "PATCH", body: { status: next } });
-      toast.success(`Tuition ${next}`);
+      alertSuccess(`Tuition ${next}`);
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     } finally {
       setBusyId(null);
     }

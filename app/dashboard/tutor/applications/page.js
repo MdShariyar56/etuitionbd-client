@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { FaPen, FaTrash } from "react-icons/fa6";
 import Loading from "@/components/Loading";
 import StatusBadge from "@/components/StatusBadge";
@@ -22,10 +22,10 @@ export default function MyApplicationsPage() {
     if (!ok) return;
     try {
       await api(`/applications/${a._id}`, { method: "DELETE" });
-      toast.success("Application deleted");
+      alertSuccess("Application deleted");
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     }
   };
 
@@ -35,11 +35,11 @@ export default function MyApplicationsPage() {
     try {
       const { qualifications, experience, expectedSalary } = editing;
       await api(`/applications/${editing._id}`, { method: "PATCH", body: { qualifications, experience, expectedSalary } });
-      toast.success("Application updated");
+      alertSuccess("Application updated");
       setEditing(null);
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     } finally {
       setSaving(false);
     }

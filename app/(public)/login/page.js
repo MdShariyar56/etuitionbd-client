@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { dashboardPath, useAuth } from "@/context/AuthContext";
@@ -29,23 +29,23 @@ export default function LoginPage() {
     setBusy(true);
     try {
       const u = await fn();
-      toast.success(`Welcome back, ${u.name}!`);
+      alertSuccess(`Welcome back, ${u.name}!`);
       go(u);
     } catch (err) {
-      toast.error(authMessage(err));
+      alertError(authMessage(err));
       setBusy(false);
     }
   };
 
   const forgot = async () => {
     const email = form.email.trim();
-    if (!email) return toast.error("Enter your email address first.");
+    if (!email) return alertError("Enter your email address first.");
     setBusy(true);
     try {
       await resetPassword(email);
-      toast.success("If an account exists for this email, a password reset link has been sent.");
+      alertSuccess("If an account exists for this email, a password reset link has been sent.");
     } catch (err) {
-      toast.error(authMessage(err));
+      alertError(authMessage(err));
     }
     setBusy(false);
   };

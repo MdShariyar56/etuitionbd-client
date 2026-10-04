@@ -22,7 +22,7 @@ Solve the real problem of finding qualified tutors and verified tuitions: reduce
 
 ## Tech stack / packages
 
-Next.js (App Router), React, Tailwind CSS, DaisyUI, Firebase Auth, Stripe (`@stripe/react-stripe-js`), Framer Motion, Recharts, react-hot-toast, SweetAlert2, react-icons.
+Next.js (App Router), React, Tailwind CSS, DaisyUI, Firebase Auth, Stripe (`@stripe/react-stripe-js`), Framer Motion, Recharts, SweetAlert2, react-icons.
 
 ## Getting started
 

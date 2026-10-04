@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Loading from "@/components/Loading";
@@ -24,15 +24,15 @@ function CheckoutForm({ amount }) {
     setPaying(true);
     const { error, paymentIntent } = await stripe.confirmPayment({ elements, redirect: "if_required" });
     if (error) {
-      toast.error(error.message || "Payment failed");
+      alertError(error.message || "Payment failed");
       return setPaying(false);
     }
     try {
       await api("/payments/confirm", { method: "POST", body: { paymentIntentId: paymentIntent.id } });
-      toast.success("Payment successful. Tutor approved!");
+      alertSuccess("Payment successful. Tutor approved!");
       router.replace("/dashboard/payments");
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
       setPaying(false);
     }
   };

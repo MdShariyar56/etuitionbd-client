@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { FaPen, FaTrash } from "react-icons/fa6";
 import Avatar from "@/components/Avatar";
 import Loading from "@/components/Loading";
@@ -37,11 +37,11 @@ export default function UserManagementPage() {
       const body = { name, phone, photoURL, verified: !!verified };
       if (editing._id !== me._id) Object.assign(body, { role: r, status });
       await api(`/users/${editing._id}`, { method: "PATCH", body });
-      toast.success("User updated");
+      alertSuccess("User updated");
       setEditing(null);
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     } finally {
       setSaving(false);
     }
@@ -52,10 +52,10 @@ export default function UserManagementPage() {
     if (!ok) return;
     try {
       await api(`/users/${u._id}`, { method: "DELETE" });
-      toast.success("User deleted");
+      alertSuccess("User deleted");
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     }
   };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { api } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 
@@ -16,11 +16,11 @@ export default function ApplyModal({ tuition, open, onClose, onApplied }) {
     setSaving(true);
     try {
       await api("/applications", { method: "POST", body: { ...form, tuitionId: tuition._id } });
-      toast.success("Application submitted!");
+      alertSuccess("Application submitted!");
       onApplied?.();
       onClose();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     } finally {
       setSaving(false);
     }

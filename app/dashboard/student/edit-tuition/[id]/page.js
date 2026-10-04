@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import Loading from "@/components/Loading";
 import PageHeader from "@/components/dashboard/PageHeader";
 import TuitionForm from "@/components/dashboard/TuitionForm";
@@ -19,10 +19,10 @@ export default function EditTuitionPage() {
   const submit = async (body) => {
     try {
       await api(`/tuitions/${id}`, { method: "PATCH", body });
-      toast.success("Tuition updated");
+      alertSuccess("Tuition updated");
       router.push("/dashboard/student/my-tuitions");
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     }
   };
 

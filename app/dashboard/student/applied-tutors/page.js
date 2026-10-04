@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import Avatar from "@/components/Avatar";
 import Loading from "@/components/Loading";
 import StatusBadge from "@/components/StatusBadge";
@@ -20,10 +20,10 @@ export default function AppliedTutorsPage() {
     if (!ok) return;
     try {
       await api(`/applications/${a._id}/reject`, { method: "PATCH" });
-      toast.success("Application rejected");
+      alertSuccess("Application rejected");
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     }
   };
 

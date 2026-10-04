@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { alertSuccess } from "@/lib/alert";
 import { FaLocationDot, FaPhone, FaEnvelope } from "react-icons/fa6";
 
 export default function ContactPage() {
@@ -10,7 +10,7 @@ export default function ContactPage() {
 
   const submit = (e) => {
     e.preventDefault();
-    toast.success("Thanks! We'll get back to you soon.");
+    alertSuccess("Thanks! We'll get back to you soon.");
     setForm({ name: "", email: "", message: "" });
   };
 

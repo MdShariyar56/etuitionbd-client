@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import PageHeader from "@/components/dashboard/PageHeader";
 import TuitionForm from "@/components/dashboard/TuitionForm";
 import { api } from "@/lib/api";
@@ -12,10 +12,10 @@ export default function PostTuitionPage() {
   const submit = async (body) => {
     try {
       await api("/tuitions", { method: "POST", body });
-      toast.success("Tuition posted! It will go live after admin approval.");
+      alertSuccess("Tuition posted! It will go live after admin approval.");
       router.push("/dashboard/student/my-tuitions");
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     }
   };
 

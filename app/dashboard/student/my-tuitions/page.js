@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
+import { alertError, alertSuccess } from "@/lib/alert";
 import { FaPen, FaTrash, FaEye } from "react-icons/fa6";
 import Loading from "@/components/Loading";
 import StatusBadge from "@/components/StatusBadge";
@@ -24,10 +24,10 @@ export default function MyTuitionsPage() {
     if (!ok) return;
     try {
       await api(`/tuitions/${t._id}`, { method: "DELETE" });
-      toast.success("Tuition deleted");
+      alertSuccess("Tuition deleted");
       reload();
     } catch (err) {
-      toast.error(err.message);
+      alertError(err.message);
     }
   };
 
