@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaBars } from "react-icons/fa6";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { FaBars, FaGaugeHigh, FaRightFromBracket, FaUserGear } from "react-icons/fa6";
 import Logo from "./Logo";
 import Avatar from "./Avatar";
+import ThemeToggle from "./ThemeToggle";
 import { dashboardPath, useAuth } from "@/context/AuthContext";
 
 const links = [
@@ -18,61 +20,88 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 25, mass: 0.3 });
 
-  const items = links.map((l) => {
-    const active = l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
-    return (
-      <li key={l.href}>
-        <Link href={l.href} className={active ? "font-bold text-primary" : "font-medium"}>
-          {l.label}
-        </Link>
-      </li>
-    );
-  });
+  const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-base-300 bg-base-100/90 backdrop-blur">
-      <div className="navbar mx-auto max-w-7xl px-4">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <button tabIndex={0} className="btn btn-ghost btn-square lg:hidden" aria-label="Open menu">
-              <FaBars />
+    <header className="glass sticky top-0 z-50 border-b border-base-300/70">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4">
+        <div className="flex items-center gap-1">
+          <div className="dropdown lg:hidden">
+            <button tabIndex={0} className="btn btn-ghost btn-square btn-sm" aria-label="Open menu">
+              <FaBars className="text-lg" />
             </button>
-            <ul tabIndex={0} className="menu dropdown-content z-10 mt-3 w-56 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
-              {items}
+            <ul tabIndex={0} className="menu dropdown-content z-10 mt-3 w-60 gap-1 rounded-box border border-base-300 bg-base-100 p-2 shadow-xl">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className={isActive(l.href) ? "bg-primary/10 font-bold text-primary" : "font-medium"}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <Logo />
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal gap-1 px-1">{items}</ul>
-        </div>
-        <div className="navbar-end gap-2">
+
+        <ul className="hidden items-center gap-1 lg:flex">
+          {links.map((l) => {
+            const active = isActive(l.href);
+            return (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className={`relative block rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                    active ? "text-primary" : "text-base-content/70 hover:text-neutral"
+                  }`}
+                >
+                  {active && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 rounded-full bg-primary/10 ring-1 ring-primary/20"
+                      transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                    />
+                  )}
+                  <span className="relative">{l.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
           {loading ? (
             <span className="loading loading-dots loading-sm text-primary" />
           ) : user ? (
             <>
-              <Link href={dashboardPath(user.role)} className="btn btn-primary btn-sm hidden sm:inline-flex">
-                Dashboard
+              <Link href={dashboardPath(user.role)} className="btn btn-primary btn-sm hidden rounded-full sm:inline-flex">
+                <FaGaugeHigh /> Dashboard
               </Link>
               <div className="dropdown dropdown-end">
                 <button tabIndex={0} className="btn btn-ghost btn-circle avatar" aria-label="Profile menu">
-                  <Avatar src={user.photoURL} name={user.name} />
+                  <Avatar src={user.photoURL} name={user.name} className="ring-2 ring-primary/30" />
                 </button>
-                <ul tabIndex={0} className="menu dropdown-content z-10 mt-3 w-56 rounded-box border border-base-300 bg-base-100 p-2 shadow-lg">
-                  <li className="menu-title normal-case">
-                    <span className="block truncate font-bold text-neutral">{user.name}</span>
-                    <span className="block truncate text-xs font-normal capitalize">{user.role}</span>
+                <ul tabIndex={0} className="menu dropdown-content z-10 mt-3 w-60 gap-1 rounded-box border border-base-300 bg-base-100 p-2 shadow-xl">
+                  <li className="pointer-events-none mb-1 border-b border-base-300 px-3 pb-3 pt-2">
+                    <span className="block truncate p-0 font-bold text-neutral">{user.name}</span>
+                    <span className="block truncate p-0 text-xs capitalize text-base-content/60">{user.role}</span>
                   </li>
                   <li>
-                    <Link href={dashboardPath(user.role)}>Dashboard</Link>
+                    <Link href={dashboardPath(user.role)}>
+                      <FaGaugeHigh /> Dashboard
+                    </Link>
                   </li>
                   <li>
-                    <Link href="/dashboard/profile">Profile</Link>
+                    <Link href="/dashboard/profile">
+                      <FaUserGear /> Profile
+                    </Link>
                   </li>
                   <li>
                     <button onClick={logout} className="text-error">
-                      Logout
+                      <FaRightFromBracket /> Logout
                     </button>
                   </li>
                 </ul>
@@ -80,16 +109,17 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link href="/login" className="btn btn-ghost btn-sm">
+              <Link href="/login" className="btn btn-ghost btn-sm rounded-full">
                 Login
               </Link>
-              <Link href="/register" className="btn btn-primary btn-sm">
+              <Link href="/register" className="btn btn-primary btn-sm shine rounded-full shadow-lg shadow-primary/25">
                 Register
               </Link>
             </>
           )}
         </div>
-      </div>
+      </nav>
+      <motion.div style={{ scaleX: progress }} className="bg-brand absolute bottom-0 left-0 h-0.5 w-full origin-left" />
     </header>
   );
 }

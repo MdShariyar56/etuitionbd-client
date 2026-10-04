@@ -3,16 +3,16 @@ import { FaGraduationCap } from "react-icons/fa6";
 
 export default function Logo({ light = false, tagline = false }) {
   return (
-    <Link href="/" className="flex items-center gap-2.5">
-      <span className="grid size-10 place-items-center rounded-xl bg-primary text-primary-content shadow-sm">
+    <Link href="/" className="group flex items-center gap-2.5" aria-label="E-TuitionBD home">
+      <span className="bg-brand grid size-10 place-items-center rounded-xl text-white shadow-lg shadow-primary/30 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
         <FaGraduationCap className="text-xl" />
       </span>
       <span className="leading-tight">
         <span className={`block text-xl font-extrabold tracking-tight ${light ? "text-white" : "text-neutral"}`}>
-          E-Tuition<span className="text-accent">BD</span>
+          E-Tuition<span className="text-gradient">BD</span>
         </span>
         {tagline && (
-          <span className={`block text-[11px] tracking-widest ${light ? "text-white/70" : "text-base-content/60"}`}>
+          <span className={`block text-[11px] font-semibold tracking-[0.2em] ${light ? "text-slate-400" : "text-base-content/60"}`}>
             LEARN · TEACH · GROW
           </span>
         )}
