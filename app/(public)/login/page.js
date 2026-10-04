@@ -11,7 +11,7 @@ import { authMessage } from "@/lib/authErrors";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { user, loading, login, googleLogin } = useAuth();
+  const { user, loading, login, googleLogin, resetPassword } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -35,6 +35,19 @@ export default function LoginPage() {
       toast.error(authMessage(err));
       setBusy(false);
     }
+  };
+
+  const forgot = async () => {
+    const email = form.email.trim();
+    if (!email) return toast.error("Enter your email address first.");
+    setBusy(true);
+    try {
+      await resetPassword(email);
+      toast.success("If an account exists for this email, a password reset link has been sent.");
+    } catch (err) {
+      toast.error(authMessage(err));
+    }
+    setBusy(false);
   };
 
   const submit = (e) => {
@@ -62,6 +75,11 @@ export default function LoginPage() {
               </button>
             </div>
           </label>
+          <div className="text-right">
+            <button type="button" onClick={forgot} disabled={busy} className="text-sm font-semibold text-primary hover:underline">
+              Forgot password?
+            </button>
+          </div>
           <button className="btn btn-primary w-full" disabled={busy}>
             {busy ? <span className="loading loading-spinner loading-sm" /> : "Login"}
           </button>

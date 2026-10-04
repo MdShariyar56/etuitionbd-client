@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -108,8 +109,10 @@ export function AuthProvider({ children }) {
       return exchange(cred.user, { role: "student" });
     });
 
+  const resetPassword = (email) => sendPasswordResetEmail(auth, email);
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, register, login, googleLogin, logout }}>
+    <AuthContext.Provider value={{ user, setUser, loading, register, login, googleLogin, resetPassword, logout }}>
       {children}
     </AuthContext.Provider>
   );
