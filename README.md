@@ -2,8 +2,8 @@
 
 A complete tuition management platform where **students** post tuition requirements, **tutors** apply, and **admins** review, verify and monitor everything, with Stripe payments and role-based dashboards.
 
-**Live URL:** _add after deployment_
-**Server repository / API:** see the eTuitionBD server project (separate repo, deployed separately).
+**Live URL:** https://etuitionbd-client-eight.vercel.app
+**Server repository:** https://github.com/MdShariyar56/etuitionbd-server (API: https://etuitionbd-server-seven.vercel.app)
 
 ## Purpose
 
